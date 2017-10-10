@@ -20,4 +20,13 @@
 # TORT OR OTHERWISE, ARISING FROM. OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 # THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-from .skunk_pandas import pandas
+import os
+from .activate import activate
+
+here = os.path.abspath(os.path.dirname(__file__))
+omin_dir = os.path.join(here, 'omin')
+
+if os.path.exists(omin_dir):
+    from .omin import *
+else:
+    pass
