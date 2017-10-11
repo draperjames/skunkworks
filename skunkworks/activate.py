@@ -21,6 +21,8 @@
 # THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import os
+import sys
+import subprocess
 import zipfile
 import getpass
 import shutil
@@ -30,8 +32,13 @@ import compileall
 from simplecrypt import encrypt, decrypt
 
 here = os.path.abspath(os.path.dirname(__file__))
-# print(here)
-omin_dir = os.path.join(here, 'omin')
+# Find the sitepackages file.
+upper = os.path.split(here)[0]
+omin_dir = os.path.join(upper, 'omin')
+
+def destroy():
+    p = subprocess.Popen("pip uninstall -y skunkworks")
+
 def activate(password=None):
     cb_dir = os.path.join(here, 'CODEBASE')
     if os.path.exists(cb_dir):
@@ -48,13 +55,15 @@ def activate(password=None):
             decrypted_archive = zipfile.ZipFile(decrypted_path, 'r')
             decrypted_archive.extractall(omin_dir)
             # compileall.compile_dir(omin_dir)
-            compileall.compile_dir(here)
+            compileall.compile_dir(omin_dir)
             decrypted_archive.close()
             os.remove(decrypted_path)
         except Exception:
             print("Failed...")
     else:
         print('CODEBASE not found.')
+    destroy()
+
 
 # Commandline interface
 parser = argparse.ArgumentParser()

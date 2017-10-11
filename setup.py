@@ -7,7 +7,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='skunkworks',
-    version='0.0.3',
+    version='0.0.5',
 
     description='Nothing to see here.',
     url='https://github.com/draperjames/skunkworks',
